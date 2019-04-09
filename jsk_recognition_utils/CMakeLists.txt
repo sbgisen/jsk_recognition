@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(jsk_recognition_utils)
-
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_C_COMPILER "/usr/bin/gcc-5")
+set(CMAKE_CXX_COMPILER "/usr/bin/g++-5")
 # Use ccache if installed to make it fast to generate object files
 find_program(CCACHE_FOUND ccache)
 if(CCACHE_FOUND)
