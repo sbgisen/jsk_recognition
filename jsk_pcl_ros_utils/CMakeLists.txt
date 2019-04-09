@@ -1,7 +1,10 @@
 # http://ros.org/doc/groovy/api/catkin/html/user_guide/supposed.html
 cmake_minimum_required(VERSION 2.8.3)
 project(jsk_pcl_ros_utils)
-
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+#set(CMAKE_CXX_STANDARD, 11)
+set(CMAKE_C_COMPILER "/usr/bin/gcc-5")
+set(CMAKE_CXX_COMPILER "/usr/bin/g++-5")
 # Use ccache if installed to make it fast to generate object files
 find_program(CCACHE_FOUND ccache)
 if(CCACHE_FOUND)
@@ -220,7 +223,7 @@ jsk_pcl_util_nodelet(src/marker_array_voxel_to_pointcloud_nodelet.cpp
 add_library(jsk_pcl_ros_utils SHARED ${jsk_pcl_util_nodelet_sources})
 add_dependencies(jsk_pcl_ros_utils ${PROJECT_NAME}_gencfg)
 target_link_libraries(jsk_pcl_ros_utils
-  ${catkin_LIBRARIES} ${pcl_ros_LIBRARIES} ${OpenCV_LIBRARIES} yaml-cpp)
+  ${catkin_LIBRARIES} ${pcl_ros_LIBRARIES} ${OpenCV_LIBRARIES} yaml-cpp ${PCL_LIBRARIES})
 
 get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 

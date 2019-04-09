@@ -188,10 +188,10 @@ namespace jsk_pcl_ros_utils
           //computeCoefficients(transformed_polygon, transformed_coefficient);
           transformModelCoefficient(eigen_transform, coefficient,
                                     transformed_coefficient);
-          if (isnan(transformed_coefficient.values[0]) ||
-              isnan(transformed_coefficient.values[1]) ||
-              isnan(transformed_coefficient.values[2]) ||
-              isnan(transformed_coefficient.values[3])) {
+          if (std::isnan(transformed_coefficient.values[0]) ||
+              std::isnan(transformed_coefficient.values[1]) ||
+              std::isnan(transformed_coefficient.values[2]) ||
+              std::isnan(transformed_coefficient.values[3])) {
             continue;
           }
           transformed_polygon_array.polygons.push_back(transformed_polygon);

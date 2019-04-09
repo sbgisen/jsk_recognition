@@ -95,7 +95,7 @@ namespace jsk_pcl_ros_utils
     cv::Mat mask_image = cv::Mat::zeros(cloud_msg->height, cloud_msg->width, CV_8UC1);
     for (size_t index = 0; index < pc->points.size(); index++)
     {
-      if (isnan(pc->points[index].x) || isnan(pc->points[index].y) || isnan(pc->points[index].z))
+      if (std::isnan(pc->points[index].x) || std::isnan(pc->points[index].y) || std::isnan(pc->points[index].z))
       {
         continue;
       }

@@ -65,7 +65,7 @@ namespace jsk_pcl_ros_utils
     PCLIndicesMsg indices_msg;
     for (size_t i = 0; i < pc->points.size(); i++)
     {
-      if (!isnan(pc->points[i].x) && !isnan(pc->points[i].y) && !isnan(pc->points[i].z))
+      if (!std::isnan(pc->points[i].x) && !std::isnan(pc->points[i].y) && !std::isnan(pc->points[i].z))
       {
         indices_msg.indices.push_back(i);
       }

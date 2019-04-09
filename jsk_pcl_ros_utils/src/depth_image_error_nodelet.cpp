@@ -84,7 +84,7 @@ namespace jsk_pcl_ros_utils
     NODELET_INFO("timestamp diff is %f", (depth_image->header.stamp - uv_point->header.stamp).toSec());
     NODELET_INFO("(u, v) = (%d, %d)", (int)uv_point->point.x, (int)uv_point->point.y);
     NODELET_INFO("(z, d) = (%f, %f)", uv_point->point.z, depth_from_depth_sensor);
-    if (! isnan(depth_from_depth_sensor)) {
+    if (! std::isnan(depth_from_depth_sensor)) {
       jsk_recognition_msgs::DepthErrorResult result;
       result.header.frame_id = depth_image->header.frame_id;
       result.header.stamp = depth_image->header.stamp;

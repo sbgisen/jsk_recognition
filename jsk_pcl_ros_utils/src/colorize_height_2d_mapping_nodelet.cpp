@@ -68,7 +68,7 @@ namespace jsk_pcl_ros_utils
     pcl::PointCloud<pcl::PointXYZI> colorized_cloud;
     for (size_t i = 0; i < cloud.points.size(); i++) {
       pcl::PointXYZ in = cloud.points[i];
-      if (isnan(in.x) || isnan(in.y) || isnan(in.z)) {
+      if (std::isnan(in.x) || std::isnan(in.y) || std::isnan(in.z)) {
         continue;
       }
       pcl::PointXYZI out;
