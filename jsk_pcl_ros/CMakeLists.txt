@@ -1,7 +1,9 @@
 # http://ros.org/doc/groovy/api/catkin/html/user_guide/supposed.html
 cmake_minimum_required(VERSION 2.8.3)
 project(jsk_pcl_ros)
-
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_C_COMPILER "/usr/bin/gcc-5")
+set(CMAKE_CXX_COMPILER "/usr/bin/g++-5")
 # Use ccache if installed to make it fast to generate object files
 find_program(CCACHE_FOUND ccache)
 if(CCACHE_FOUND)
@@ -420,7 +422,7 @@ else (PCL_GPU_KINFU_LARGE_SCALE_FOUND)
 endif (PCL_GPU_KINFU_LARGE_SCALE_FOUND)
 if (robot_self_filter_FOUND)
   include_directories(include ${robot_self_filter_INCLUDE_DIRS})
-  target_link_libraries(jsk_pcl_ros ${robot_self_filter_LIBRARIES})
+  target_link_libraries(jsk_pcl_ros ${robot_self_filter_LIBRARIES} ${PCL_LIBRARIES})
 endif (robot_self_filter_FOUND)
 
 add_dependencies(jsk_pcl_ros ${PROJECT_NAME}_gencfg)
@@ -436,17 +438,17 @@ target_link_libraries(jsk_pcl_ros_moveit
 # bench/ directory
 
 add_executable(bench_ransac_plane_estimation bench/bench_ransac_plane_estimation.cpp)
-target_link_libraries(bench_ransac_plane_estimation jsk_pcl_ros)
+target_link_libraries(bench_ransac_plane_estimation jsk_pcl_ros ${PCL_LIBRARIES})
 
 # sample/ directory
 add_executable(sample_cube_nearest_point sample/src/sample_cube_nearest_point.cpp)
-target_link_libraries(sample_cube_nearest_point jsk_pcl_ros_base)
+target_link_libraries(sample_cube_nearest_point jsk_pcl_ros_base ${PCL_LIBRARIES})
 
 # tool/ directory
 add_executable(range_sensor_error_visualization tool/range_sensor_error_visualization.cpp)
-target_link_libraries(range_sensor_error_visualization jsk_pcl_ros)
+target_link_libraries(range_sensor_error_visualization jsk_pcl_ros ${PCL_LIBRARIES})
 add_executable(depth_camera_error_visualization tool/depth_camera_error_visualization.cpp)
-target_link_libraries(depth_camera_error_visualization jsk_pcl_ros)
+target_link_libraries(depth_camera_error_visualization jsk_pcl_ros ${PCL_LIBRARIES})
 
 get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 message("flags: ${CMAKE_CXX_FLAGS}")
@@ -495,7 +497,7 @@ if (CATKIN_ENABLE_TESTING)
   find_package(roslaunch REQUIRED)
   find_package(rostest REQUIRED)
   add_rostest_gtest(test_extract_indices test/test_extract_indices.test test/test_extract_indices.cpp)
-  target_link_libraries(test_extract_indices ${catkin_LIBRARIES} ${GTEST_LIBRARIES})
+  target_link_libraries(test_extract_indices ${catkin_LIBRARIES} ${GTEST_LIBRARIES} ${PCL_LIBRARIES})
   if("$ENV{ROS_DISTRO}" STRGREATER "hydro")
     # because of unreleased topic_tools/transform on hydro
     add_rostest(test/test_add_color_from_image.test)
