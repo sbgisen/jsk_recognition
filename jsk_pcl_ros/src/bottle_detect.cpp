@@ -503,7 +503,7 @@ void PointcloudScreenpoint::yolo_windows_cb (const darknet_ros_msgs::BoundingBox
 			transformStamped.transform.translation.y = ry;
 			transformStamped.transform.translation.z = rz;
 			transformStamped.header.stamp = ros::Time::now();
-			transformStamped.header.frame_id = "camera_depth_frame";
+			transformStamped.header.frame_id = "camera_depth_optical_frame";
 			br.sendTransform(transformStamped);
 		}
 	}

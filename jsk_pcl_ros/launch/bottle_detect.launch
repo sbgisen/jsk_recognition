@@ -4,7 +4,7 @@
        doc="point cloud processor machine" />
   <arg name="display_machine" default="localhost"
        doc="display machine for visualization" />
-  <arg name="base_frame" default="camera_depth_frame" />
+  <arg name="base_frame" default="camera_depth_optical_frame" />
   <arg name="image" default="/camera/color"
        doc="image namespace" />
   <arg name="image_type" default="image_raw"
@@ -29,7 +29,7 @@
        doc="if true, launch rviz on $(arg display_machine)" />
   <arg name="PUBLISH_BASE_FOOTPRINT" default="false"
        doc="publish tf from base_footprint to camera" />
-  <arg name="publish_base_footprint_camera_frame" default="camera_depth_frame"
+  <arg name="publish_base_footprint_camera_frame" default="camera_depth_optical_frame"
        doc="frame used for publish tf from base_footprint to camera" />
 
   <!-- for organized point cloud -->

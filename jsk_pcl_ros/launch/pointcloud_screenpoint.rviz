@@ -66,8 +66,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 4.7006588
-        Min Value: 0.394910693
+        Max Value: 5.52152681
+        Min Value: 0.415872782
         Value: true
       Axis: X
       Channel Name: intensity
@@ -116,6 +116,26 @@ Visualization Manager:
       Frame Timeout: 1
       Frames:
         All Enabled: true
+        book1:
+          Value: true
+        book2:
+          Value: true
+        book3:
+          Value: true
+        book4:
+          Value: true
+        book5:
+          Value: true
+        book6:
+          Value: true
+        book7:
+          Value: true
+        book8:
+          Value: true
+        book9:
+          Value: true
+        bottle1:
+          Value: true
         camera_aligned_depth_to_color_frame:
           Value: true
         camera_aligned_depth_to_infra1_frame:
@@ -134,6 +154,22 @@ Visualization Manager:
           Value: true
         camera_link:
           Value: true
+        cup1:
+          Value: true
+        handbag1:
+          Value: true
+        knife1:
+          Value: true
+        person1:
+          Value: true
+        person2:
+          Value: true
+        refrigerator1:
+          Value: true
+        tie1:
+          Value: true
+        umbrella1:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -151,7 +187,42 @@ Visualization Manager:
             {}
           camera_depth_frame:
             camera_depth_optical_frame:
-              {}
+              book1:
+                {}
+              book2:
+                {}
+              book3:
+                {}
+              book4:
+                {}
+              book5:
+                {}
+              book6:
+                {}
+              book7:
+                {}
+              book8:
+                {}
+              book9:
+                {}
+              bottle1:
+                {}
+              cup1:
+                {}
+              handbag1:
+                {}
+              knife1:
+                {}
+              person1:
+                {}
+              person2:
+                {}
+              refrigerator1:
+                {}
+              tie1:
+                {}
+              umbrella1:
+                {}
           camera_infra1_frame:
             {}
       Update Interval: 0
@@ -181,25 +252,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 4.4074645
+      Distance: 3.49152207
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.0771131143
-        Y: -0.227974445
-        Z: -1.73435354
+        X: -0.0082449913
+        Y: -0.00662912428
+        Z: 0.0227432251
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: -1.34979641
+      Pitch: 0.545694828
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.64563465
+      Yaw: 3.09838557
     Saved: ~
 Window Geometry:
   Displays:
