@@ -64,6 +64,9 @@ void PointcloudScreenpoint::onInit()
   pub_point_   = advertise< geometry_msgs::PointStamped >(*pnh_, "output_point", 1);
   pub_polygon_ = advertise< geometry_msgs::PolygonStamped >(*pnh_, "output_polygon", 1);
 
+  yolo_windows_sub_ = pnh_ -> subscribe("yolo_windows", 1, &PointcloudScreenpoint::yolo_windows_cb, this);
+  number_window_sub_ = pnh_ -> subscribe("number_window", 1, &PointcloudScreenpoint::number_window_cb, this);
+
   onInitPostProcess();
 }
 
@@ -74,6 +77,7 @@ void PointcloudScreenpoint::subscribe()
   poly_sub_.subscribe(*pnh_, "poly", 1);
   point_sub_.subscribe(*pnh_, "point", 1);
   point_array_sub_.subscribe(*pnh_, "point_array", 1);
+
 
   if (synchronization_)
   {
@@ -291,7 +295,7 @@ void PointcloudScreenpoint::point_cb (const geometry_msgs::PointStampedConstPtr&
 {
   if (latest_cloud_.empty())
   {
-    NODELET_ERROR_THROTTLE(1.0, "no point cloud was received");
+    NODELET_ERROR_THROTTLE(1.0, "no point cloud was received(point)");
     return;
   }
   if (pub_point_.getNumSubscribers() > 0)
@@ -318,12 +322,11 @@ void PointcloudScreenpoint::point_cb (const geometry_msgs::PointStampedConstPtr&
   }
 }
 
-//screenpointからの情報(2d)をここで処理している
 void PointcloudScreenpoint::point_array_cb (const sensor_msgs::PointCloud2ConstPtr& pt_arr_ptr)
 {
   if (latest_cloud_.empty())
   {
-    NODELET_ERROR_THROTTLE(1.0, "no point cloud was received");
+    NODELET_ERROR_THROTTLE(1.0, "no point cloud was received(point_array)");
     return;
   }
   if (pub_points_.getNumSubscribers() > 0) {
@@ -354,7 +357,7 @@ void PointcloudScreenpoint::point_array_cb (const sensor_msgs::PointCloud2ConstP
 void PointcloudScreenpoint::rect_cb (const geometry_msgs::PolygonStampedConstPtr& array_ptr) {
   if (latest_cloud_.empty())
   {
-    NODELET_ERROR_THROTTLE(1.0, "no point cloud was received");
+    NODELET_ERROR_THROTTLE(1.0, "no point cloud was received(rect)");
     return;
   }
 
@@ -397,7 +400,7 @@ void PointcloudScreenpoint::poly_cb(const geometry_msgs::PolygonStampedConstPtr&
 {
   if (latest_cloud_.empty())
   {
-    NODELET_ERROR_THROTTLE(1.0, "no point cloud was received");
+    NODELET_ERROR_THROTTLE(1.0, "no point cloud was received(poly)");
     return;
   }
   if (pub_polygon_.getNumSubscribers() > 0)
@@ -455,6 +458,49 @@ void PointcloudScreenpoint::sync_rect_cb(
   boost::mutex::scoped_lock lock(mutex_);
   points_cb(points_ptr);
   rect_cb (array_ptr);
+}
+
+void PointcloudScreenpoint::yolo_windows_cb (const darknet_ros_msgs::BoundingBoxes& msg)
+{
+	static tf2_ros::TransformBroadcaster br;
+	geometry_msgs::TransformStamped transformStamped;
+	tf2::Quaternion q;
+	q.setRPY(0,0,0);
+	transformStamped.transform.rotation.x = q.x();
+	transformStamped.transform.rotation.y = q.y();
+	transformStamped.transform.rotation.z = q.z();
+	transformStamped.transform.rotation.w = q.w();
+
+
+	if (latest_cloud_.empty())
+	{
+	  NODELET_ERROR_THROTTLE(1.0, "no point cloud was received");
+	  return;
+	}
+
+	for(int i; i!= object_number; i++){
+		int64_t x_center = (msg.bounding_boxes[i].xmin + msg.bounding_boxes[i].xmax)/2;
+		int64_t y_center = (msg.bounding_boxes[i].ymin + msg.bounding_boxes[i].ymax)/2;
+
+		bool ret; float rx, ry, rz;
+		ret = extract_point(latest_cloud_, x_center, y_center, rx, ry, rz);
+
+		if(ret){
+			transformStamped.transform.translation.x = rx;
+			transformStamped.transform.translation.y = ry;
+			transformStamped.transform.translation.z = rz;
+			transformStamped.header.stamp = ros::Time::now();
+			transformStamped.header.frame_id = "kinect2_ir_optical_frame";
+			transformStamped.child_frame_id = msg.bounding_boxes[i].Class;
+			br.sendTransform(transformStamped);
+		}
+	}
+}
+
+void PointcloudScreenpoint::number_window_cb (const std_msgs::Int8& msg)
+{
+	object_number = msg.data;
+	NODELET_DEBUG("%d\n", object_number);
 }
 
 bool PointcloudScreenpoint::checkpoint (const pcl::PointCloud< pcl::PointXYZ > &in_pts,

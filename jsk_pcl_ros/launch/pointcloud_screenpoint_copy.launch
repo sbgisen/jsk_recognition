@@ -1,15 +1,16 @@
 <launch>
+<machine name="localhost" address="localhost" />
   <arg name="cloud_machine" default="localhost"
        doc="point cloud processor machine" />
   <arg name="display_machine" default="localhost"
        doc="display machine for visualization" />
-  <arg name="image" default="/camera/rgb"
+  <arg name="image" default="/kinect2/sd"
        doc="image namespace" />
-  <arg name="image_type" default="image_raw"
+  <arg name="image_type" default="image_color"
        doc="image topic name" />
   <arg name="camera_info" default="$(arg image)/camera_info"
        doc="camera_info topic name" />
-  <arg name="points" default="/camera/depth/color/points"
+  <arg name="points" default="/kinect2/sd/points"
        doc="point cloud topic name" />
   <arg name="LAUNCH_OPENNI" default="false"
        doc="if true, launch openni.launch" />
@@ -72,7 +73,7 @@
     <remap from="rgb/camera_info" to="$(arg camera_info)" />
     <remap from="rgb/image_rect_color" to="$(arg image)/$(arg image_type)" />
     <remap from="depth_registered/image_rect" to="/depth_image_creator_nodelet/output" />
-    <param name="qeueu_size" value="30" />
+    <param name="qeueu_size" value="10" />
   </node>
 
   <!-- pointcloud_screenpoint_nodelet.cpp  -->
@@ -84,6 +85,8 @@
     <remap from="~point" to="$(arg image)/$(arg image_type)/screenpoint" />
     <remap from="~rect" to="$(arg image)/$(arg image_type)/screenrectangle" />
     <remap from="~point_array" to="$(arg image)/$(arg image_type)/screenpoint_array" />
+    <remap from="~yolo_windows" to="/darknet_ros/bounding_boxes" />
+    <remap from="~number_window" to="/darknet_ros/found_object" />
     <rosparam>
       queue_size: 10
       crop_size: 10
@@ -101,7 +104,7 @@
     <node name="screenpoint_view" ns="$(arg image)"
           pkg="image_view2" type="image_view2" output="screen" respawn="true"
           machine="$(arg display_machine)" >
-      <remap from="image" to="$(arg image_type)" />
+      <remap from="image" to="$(arg image)/$(arg image_type)" />
       <param name="autosize" value="true" />
     </node>
   </group>

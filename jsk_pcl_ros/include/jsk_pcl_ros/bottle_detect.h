@@ -51,6 +51,10 @@
 #include <darknet_ros_msgs/BoundingBoxes.h>
 #include <std_msgs/Int8.h>
 #include <tf/transform_broadcaster.h>
+#include <string>
+#include <iostream>
+
+#define MAX_OBJECT_NUMBER 30
 
 namespace mf = message_filters;
 
@@ -165,6 +169,7 @@ namespace jsk_pcl_ros
 
     // parameter from yolo
     int8_t object_number;
+    std::string object_name[MAX_OBJECT_NUMBER];
 
     std_msgs::Header latest_cloud_header_;
     pcl::PointCloud<pcl::PointXYZ> latest_cloud_;

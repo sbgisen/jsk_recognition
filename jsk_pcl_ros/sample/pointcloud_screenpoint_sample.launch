@@ -4,22 +4,24 @@
        doc="point cloud processor machine" />
   <arg name="display_machine" default="localhost"
        doc="display client machine" />
-  <arg name="base_frame" default="camera_link" />
-  <arg name="image" default="/camera/rgb"
+  <arg name="base_frame" default="kinect2_ir_optical_frame" />
+  <arg name="image" default="/kinect2/sd"
        doc="image namespace" />
-  <arg name="points" default="/camera/depth/points"
+  <arg name="image_type" default="image_color"
+       doc="image topic name" />
+  <arg name="points" default="/kinect2/sd/points"
        doc="point cloud" />
   <arg name="USE_VIEW" default="true"
        doc="if true, launch image_view2 on $(arg display_machine)" />
-  <arg name="USE_RVIZ" default="false"
+  <arg name="USE_RVIZ" default="true"
        doc="if true, launch rviz on $(arg display_machine)" />
   <arg name="PUBLISH_BASE_FOOTPRINT" default="false"
        doc="publish tf from base_footprint to camera" />
-  <arg name="publish_base_footprint_camera_frame" default="camera_link"
+  <arg name="publish_base_footprint_camera_frame" default="kinect2_ir_optical_frame"
        doc="frame used for publish tf from base_footprint to camera" />
 
   <!-- launch/pointcloud_screenpoint.launch -->
-  <include file="$(find jsk_pcl_ros)/launch/pointcloud_screenpoint.launch">
+  <include file="$(find jsk_pcl_ros)/launch/pointcloud_screenpoint_copy.launch">
     <arg name="cloud_machine" default="$(arg cloud_machine)"/>
     <arg name="display_machine" default="$(arg display_machine)"/>
     <arg name="image" default="$(arg image)"/>
@@ -34,7 +36,7 @@
         type="pointcloud_screenpoint.l" output="screen">
     <rosparam subst_value="true">
       base_frame: $(arg base_frame)
-      sensor_topic: $(arg image)/image_rect_color
+      sensor_topic: $(arg image)/$(arg image_type)
       ray_srv: /pointcloud_screenpoint_nodelet/screen_to_point
     </rosparam>
   </node>
@@ -43,7 +45,7 @@
   <!--<node name="display_point" pkg="roseus" machine="$(arg cloud_machine)"
   	type="roseus" output="screen" respawn="true"
         args="$(find jsk_pcl_ros)/euslisp/pointcloud_screenpoint.l">
-    <param name="sensor_topic" value="$(arg image)/image_rect_color"/>
+    <param name="sensor_topic" value="$(arg image)/$(arg image_type)"/>
     <param name="ray_srv" value="/pointcloud_screenpoint_nodelet/screen_to_point"/>
     </node>-->
 
