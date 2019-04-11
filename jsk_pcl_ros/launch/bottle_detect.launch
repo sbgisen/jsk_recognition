@@ -4,14 +4,14 @@
        doc="point cloud processor machine" />
   <arg name="display_machine" default="localhost"
        doc="display machine for visualization" />
-  <arg name="base_frame" default="kinect2_ir_optical_frame" />
-  <arg name="image" default="/kinect2/sd"
+  <arg name="base_frame" default="camera_depth_frame" />
+  <arg name="image" default="/camera/color"
        doc="image namespace" />
-  <arg name="image_type" default="image_color"
+  <arg name="image_type" default="image_raw"
        doc="image topic name" />
   <arg name="camera_info" default="$(arg image)/camera_info"
        doc="camera_info topic name" />
-  <arg name="points" default="/kinect2/sd/points"
+  <arg name="points" default="/camera/depth_registered/points"
        doc="point cloud topic name" />
   <arg name="LAUNCH_OPENNI" default="false"
        doc="if true, launch openni.launch" />
@@ -29,7 +29,7 @@
        doc="if true, launch rviz on $(arg display_machine)" />
   <arg name="PUBLISH_BASE_FOOTPRINT" default="false"
        doc="publish tf from base_footprint to camera" />
-  <arg name="publish_base_footprint_camera_frame" default="kinect2_ir_optical_frame"
+  <arg name="publish_base_footprint_camera_frame" default="camera_depth_frame"
        doc="frame used for publish tf from base_footprint to camera" />
 
   <!-- for organized point cloud -->
