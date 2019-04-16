@@ -64,8 +64,8 @@ void PointcloudScreenpoint::onInit()
   pub_point_   = advertise< geometry_msgs::PointStamped >(*pnh_, "output_point", 1);
   pub_polygon_ = advertise< geometry_msgs::PolygonStamped >(*pnh_, "output_polygon", 1);
 
-  yolo_windows_sub_ = pnh_ -> subscribe("/darknet_ros/bounding_boxes", 1, &PointcloudScreenpoint::yolo_windows_cb, this);
-  number_window_sub_ = pnh_ -> subscribe("/darknet_ros/boundign_boxes", 1, &PointcloudScreenpoint::number_window_cb, this);
+  yolo_windows_sub_ = pnh_ -> subscribe("yolo_windows", 1, &PointcloudScreenpoint::yolo_windows_cb, this);
+  number_window_sub_ = pnh_ -> subscribe("number_window", 1, &PointcloudScreenpoint::number_window_cb, this);
 
   onInitPostProcess();
 }
@@ -503,7 +503,7 @@ void PointcloudScreenpoint::yolo_windows_cb (const darknet_ros_msgs::BoundingBox
 			transformStamped.transform.translation.y = ry;
 			transformStamped.transform.translation.z = rz;
 			transformStamped.header.stamp = ros::Time::now();
-			transformStamped.header.frame_id = "camera_depth_frame";
+			transformStamped.header.frame_id = "camera_depth_optical_frame";
 			br.sendTransform(transformStamped);
 		}
 	}
