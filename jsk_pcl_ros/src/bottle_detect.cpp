@@ -482,7 +482,7 @@ void PointcloudScreenpoint::yolo_windows_cb (const darknet_ros_msgs::BoundingBox
 		int64_t x_center = msg.bounding_boxes[i].x + msg.bounding_boxes[i].w / 2;
 		int64_t y_center = msg.bounding_boxes[i].y + msg.bounding_boxes[i].h / 2;
 
-		if(i<=MAX_OBJECT_NUMBER){
+		/*if(i<=MAX_OBJECT_NUMBER){
 			object_name[i] = msg.bounding_boxes[i].Class;
 			int count=1;
 			char counts[2];
@@ -491,9 +491,9 @@ void PointcloudScreenpoint::yolo_windows_cb (const darknet_ros_msgs::BoundingBox
 					count++;
 				}
 			}
-			std::snprintf(counts, 2, "%d", count);
-			transformStamped.child_frame_id = msg.bounding_boxes[i].Class + counts;
-		}
+			std::snprintf(counts, 2, "%d", count);*/
+			transformStamped.child_frame_id = msg.bounding_boxes[i].Class /*+ counts*/;
+		//}
 
 		bool ret; float rx, ry, rz;
 		ret = extract_point(latest_cloud_, x_center, y_center, rx, ry, rz);
