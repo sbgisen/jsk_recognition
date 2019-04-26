@@ -65,7 +65,6 @@ void PointcloudScreenpoint::onInit()
   pub_polygon_ = advertise< geometry_msgs::PolygonStamped >(*pnh_, "output_polygon", 1);
 
   yolo_windows_sub_ = pnh_ -> subscribe("yolo_windows", 1, &PointcloudScreenpoint::yolo_windows_cb, this);
-  number_window_sub_ = pnh_ -> subscribe("number_window", 1, &PointcloudScreenpoint::number_window_cb, this);
 
   onInitPostProcess();
 }
@@ -479,7 +478,7 @@ void PointcloudScreenpoint::yolo_windows_cb (const darknet_ros_msgs::BoundingBox
 	  return;
 	}
 
-	for(int i; i!= object_number; i++){
+	for(int i=0; i<msg.bounding_boxes.size(); i++){
 		int64_t x_center = msg.bounding_boxes[i].x + msg.bounding_boxes[i].w / 2;
 		int64_t y_center = msg.bounding_boxes[i].y + msg.bounding_boxes[i].h / 2;
 
@@ -493,7 +492,7 @@ void PointcloudScreenpoint::yolo_windows_cb (const darknet_ros_msgs::BoundingBox
 				}
 			}
 			std::snprintf(counts, 2, "%d", count);*/
-			transformStamped.child_frame_id = msg.bounding_boxes[i].Class /*+ counts*/;
+		transformStamped.child_frame_id = msg.bounding_boxes[i].Class /*+ counts*/;
 		//}
 
 		bool ret; float rx, ry, rz;
@@ -508,12 +507,6 @@ void PointcloudScreenpoint::yolo_windows_cb (const darknet_ros_msgs::BoundingBox
 			br.sendTransform(transformStamped);
 		}
 	}
-}
-
-void PointcloudScreenpoint::number_window_cb (const std_msgs::Int8& msg)
-{
-	object_number = msg.data;
-	NODELET_DEBUG("%d\n", object_number);
 }
 
 bool PointcloudScreenpoint::checkpoint (const pcl::PointCloud< pcl::PointXYZ > &in_pts,
