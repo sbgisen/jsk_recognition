@@ -287,6 +287,7 @@ void PointcloudScreenpoint::points_cb(const sensor_msgs::PointCloud2::ConstPtr &
                 msg->width, msg->height, msg->fields.size());
 
   latest_cloud_header_ = msg->header;
+  latest_cloud_.clear();
   pcl::fromROSMsg (*msg, latest_cloud_);
 }
 
@@ -474,7 +475,7 @@ void PointcloudScreenpoint::yolo_windows_cb (const darknet_ros_msgs::BoundingBox
 
 	if (latest_cloud_.empty())
 	{
-	  NODELET_ERROR_THROTTLE(1.0, "no point cloud was received(yolo)");
+	  NODELET_ERROR_THROTTLE(0.5, "no point cloud was received(yolo)");
 	  return;
 	}
 
