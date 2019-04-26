@@ -118,7 +118,6 @@ namespace jsk_pcl_ros
                        const geometry_msgs::PolygonStamped::ConstPtr &array_ptr);
 
     void yolo_windows_cb (const darknet_ros_msgs::BoundingBoxes &msg);
-    void number_window_cb (const std_msgs::Int8 &msg);
 
     // internal functions
     bool checkpoint (const pcl::PointCloud< pcl::PointXYZ > &in_pts,
@@ -140,7 +139,6 @@ namespace jsk_pcl_ros
     ros::Publisher pub_polygon_;
     ros::ServiceServer srv_;
     ros::Subscriber yolo_windows_sub_;
-    ros::Subscriber number_window_sub_;
     mf::Subscriber < sensor_msgs::PointCloud2 > points_sub_;
     mf::Subscriber < geometry_msgs::PolygonStamped > rect_sub_;
     mf::Subscriber < geometry_msgs::PointStamped > point_sub_;
@@ -168,8 +166,7 @@ namespace jsk_pcl_ros
     double timeout_;
 
     // parameter from yolo
-    int8_t object_number;
-    std::string object_name[MAX_OBJECT_NUMBER];
+    // std::string object_name[MAX_OBJECT_NUMBER];
 
     std_msgs::Header latest_cloud_header_;
     pcl::PointCloud<pcl::PointXYZ> latest_cloud_;
