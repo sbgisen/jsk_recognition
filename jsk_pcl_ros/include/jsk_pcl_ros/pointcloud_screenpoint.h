@@ -48,6 +48,9 @@
 #include <pcl/features/normal_3d.h>
 #include <pcl/kdtree/kdtree_flann.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <darknet_ros_msgs/BoundingBoxes.h>
+#include <std_msgs/Int8.h>
+#include <tf/transform_broadcaster.h>
 
 namespace mf = message_filters;
 
@@ -110,6 +113,9 @@ namespace jsk_pcl_ros
     void sync_poly_cb (const sensor_msgs::PointCloud2::ConstPtr &points_ptr,
                        const geometry_msgs::PolygonStamped::ConstPtr &array_ptr);
 
+    void yolo_windows_cb (const darknet_ros_msgs::BoundingBoxes &msg);
+    void number_window_cb (const std_msgs::Int8 &msg);
+
     // internal functions
     bool checkpoint (const pcl::PointCloud< pcl::PointXYZ > &in_pts,
                      int x, int y,
@@ -129,6 +135,8 @@ namespace jsk_pcl_ros
     ros::Publisher pub_point_;
     ros::Publisher pub_polygon_;
     ros::ServiceServer srv_;
+    ros::Subscriber yolo_windows_sub_;
+    ros::Subscriber number_window_sub_;
     mf::Subscriber < sensor_msgs::PointCloud2 > points_sub_;
     mf::Subscriber < geometry_msgs::PolygonStamped > rect_sub_;
     mf::Subscriber < geometry_msgs::PointStamped > point_sub_;
@@ -154,6 +162,9 @@ namespace jsk_pcl_ros
     int search_size_;
     int crop_size_;
     double timeout_;
+
+    // parameter from yolo
+    int8_t object_number;
 
     std_msgs::Header latest_cloud_header_;
     pcl::PointCloud<pcl::PointXYZ> latest_cloud_;

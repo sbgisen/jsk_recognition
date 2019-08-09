@@ -286,6 +286,7 @@ void PointcloudScreenpoint::points_cb(const sensor_msgs::PointCloud2::ConstPtr &
   pcl::fromROSMsg (*msg, latest_cloud_);
 }
 
+//screenpointからの情報をここで処理している
 void PointcloudScreenpoint::point_cb (const geometry_msgs::PointStampedConstPtr& pt_ptr)
 {
   if (latest_cloud_.empty())
@@ -317,6 +318,7 @@ void PointcloudScreenpoint::point_cb (const geometry_msgs::PointStampedConstPtr&
   }
 }
 
+//screenpointからの情報(2d)をここで処理している
 void PointcloudScreenpoint::point_array_cb (const sensor_msgs::PointCloud2ConstPtr& pt_arr_ptr)
 {
   if (latest_cloud_.empty())
