@@ -51,6 +51,8 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   # tf2_ros
   tf_conversions
+  darknet_ros_msgs
+  std_msgs
   )
 find_package(PkgConfig)
 pkg_check_modules(ml_classifiers ml_classifiers QUIET)
@@ -161,7 +163,7 @@ endif ($ENV{TRAVIS_JOB_ID})
 
 # pcl_ros::Filter based class is not working...
 # https://github.com/ros-perception/perception_pcl/issues/9
-jsk_pcl_nodelet(src/pointcloud_screenpoint_nodelet.cpp "jsk_pcl/PointcloudScreenpoint" "pointcloud_screenpoint")
+jsk_pcl_nodelet(src/bottle_detect.cpp "jsk_pcl/PointcloudScreenpoint" "bottle_detect")
 jsk_pcl_nodelet_upstream(jsk_pcl_ros_utils "jsk_pcl/NormalFlipToFrame" "normal_flip_to_frame")
 if(OPENMP_FOUND)
   jsk_pcl_nodelet(src/particle_filter_tracking_nodelet.cpp "jsk_pcl/ParticleFilterTracking" "particle_filter_tracking")
