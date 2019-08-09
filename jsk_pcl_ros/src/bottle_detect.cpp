@@ -479,8 +479,8 @@ void PointcloudScreenpoint::yolo_windows_cb (const darknet_ros_msgs::BoundingBox
 	}
 
 	for(int i; i!= object_number; i++){
-		int64_t x_center = msg.bounding_boxes[i].x;
-		int64_t y_center = msg.bounding_boxes[i].y;
+		int64_t x_center = msg.bounding_boxes[i].x + msg.bounding_boxes[i].w / 2;
+		int64_t y_center = msg.bounding_boxes[i].y + msg.bounding_boxes[i].h / 2;
 
 		if(i<=MAX_OBJECT_NUMBER){
 			object_name[i] = msg.bounding_boxes[i].Class;
