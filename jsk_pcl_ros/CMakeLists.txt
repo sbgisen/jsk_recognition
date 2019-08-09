@@ -1,6 +1,7 @@
 # http://ros.org/doc/groovy/api/catkin/html/user_guide/supposed.html
 cmake_minimum_required(VERSION 2.8.3)
 project(jsk_pcl_ros)
+set(CATKIN_ENABLE_TESTING "FALSE")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_C_COMPILER "/usr/bin/gcc-5")
 set(CMAKE_CXX_COMPILER "/usr/bin/g++-5")
@@ -493,6 +494,7 @@ install(DIRECTORY config euslisp launch plugins sample scripts test
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
   USE_SOURCE_PERMISSIONS
 )
+
 
 if (CATKIN_ENABLE_TESTING)
   find_package(jsk_perception REQUIRED)

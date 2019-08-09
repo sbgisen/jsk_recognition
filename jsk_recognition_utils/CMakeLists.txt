@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(jsk_recognition_utils)
+set(CATKIN_ENABLE_TESTING "FALSE") 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_C_COMPILER "/usr/bin/gcc-5")
 set(CMAKE_CXX_COMPILER "/usr/bin/g++-5")

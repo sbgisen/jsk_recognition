@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(jsk_perception)
-
+set(CATKIN_ENABLE_TESTING "FALSE") 
 # ------------------------------------------------------------------------------------
 # Initialization
 #  1. Resolve dependencies with find_package
